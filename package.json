@@ -1,39 +1,39 @@
 {
-    "name": "plugin-extend",
-    "version": "0.1.0",
-    "description": "用于在开发一个node cli，支持自定义插件扩展",
-    "main": "distribution/index.js",
-    "scripts": {
-        "start": "node source/index.js",
-        "build": "babel source --presets babel-preset-es2015 --out-dir distribution",
-        "prepublish": "npm run build",
-        "postpublish": "git push origin --tags"
-    },
-    "author": "guomilo@gmail.com",
-    "license": "MIT",
-    "devDependencies": {
-        "babel-cli": "^6.11.4",
-        "babel-preset-es2015": "^6.9.0",
-        "husky": "^0.11.5"
-    },
-    "dependencies": {
-        "escape-string-regexp": "1.0.5",
-        "globby": "6.0.0",
-        "lodash": "4.16.4",
-        "untildify": "3.0.2"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/smocean/plugin-extend.git"
-    },
-    "keywords": [
-        "plugin",
-        "extend",
-        "node",
-        "cli"
-    ],
-    "bugs": {
-        "url": "https://github.com/smocean/plugin-extend/issues"
-    },
-    "homepage": "https://github.com/smocean/plugin-extend#readme"
+  "name": "plugin-extend",
+  "version": "0.1.1",
+  "description": "用于在开发一个node cli，支持自定义插件扩展",
+  "main": "distribution/index.js",
+  "scripts": {
+    "start": "node source/index.js",
+    "build": "babel source --presets babel-preset-es2015 --out-dir distribution",
+    "prepublish": "npm run build",
+    "postpublish": "git push origin --tags"
+  },
+  "author": "guomilo@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015": "^6.9.0",
+    "husky": "^0.11.5"
+  },
+  "dependencies": {
+    "escape-string-regexp": "1.0.5",
+    "globby": "6.0.0",
+    "lodash": "4.16.4",
+    "untildify": "3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smocean/plugin-extend.git"
+  },
+  "keywords": [
+    "plugin",
+    "extend",
+    "node",
+    "cli"
+  ],
+  "bugs": {
+    "url": "https://github.com/smocean/plugin-extend/issues"
+  },
+  "homepage": "https://github.com/smocean/plugin-extend#readme"
 }
