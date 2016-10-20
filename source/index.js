@@ -1,10 +1,25 @@
 'use strict';
+
+if (!global._babelPolyfill) {
+    require('babel-polyfill');
+}
 const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
 const globby = require('globby');
-const untildify = require('untildify');
 const Store = require('./store');
+const os = require('os');
+const home = os.homedir();
+
+
+
+function untildify(str) {
+    if (_.isString(str) !== 'string') {
+        throw new Error(`Expected a string, got ${typeof str}`);
+    }
+    return home ? str.replace(/^~($|\/|\\)/, `${home}$1`) : str;
+}
+
 
 var escapeStrRe = require('escape-string-regexp');
 
@@ -14,10 +29,10 @@ class Resolver {
     constructor(opts) {
         this.lookups = ['.'].concat(opts.lookups || []);
         this.prefix = opts.prefix || 'plugin';
-        this.entryDir = opts.entryDir || 'app';
+        // this.entryDir = opts.entryDir || 'app';
         this.store = new Store();
         this.aliases = [];
-        this.alias(/^([^:]+)$/, `$1:${this.entryDir}`);
+        //this.alias(/^([^:]+)$/, `$1:${this.entryDir}`);
     }
     lookup(callback) {
         let pluginModules = this.findPluginsIn(this.getNpmPaths());
@@ -85,7 +100,7 @@ class Resolver {
             }
             modules = globby.sync([
                 `${self.prefix}-*`,
-                `${self.prefix}-*`
+                `@*/${self.prefix}-*`
             ], { cwd: root }).map((match) => {
                 return path.join(root, match);
             }).concat(modules);
