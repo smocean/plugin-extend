@@ -14,7 +14,7 @@ const home = os.homedir();
 
 
 function untildify(str) {
-    if (_.isString(str)) {
+    if (!_.isString(str)) {
         throw new Error(`Expected a string, got ${typeof str}`);
     }
     return home ? str.replace(/^~($|\/|\\)/, `${home}$1`) : str;
