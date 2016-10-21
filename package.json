@@ -1,6 +1,6 @@
 {
   "name": "plugin-extend",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "用于在开发一个node cli，支持自定义插件扩展",
   "main": "distribution/index.js",
   "scripts": {
