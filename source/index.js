@@ -8,10 +8,16 @@ const fs = require('fs');
 const _ = require('lodash');
 const globby = require('globby');
 const Store = require('./store');
-const os = require('os');
-const home = os.homedir();
 
+const home = homedir();
 
+function homedir() {
+    if ('HOME' in process.env) {
+        return process.env['HOME'];
+    } else {
+        return process.env['HOMEDRIVE'] + process.env['HOMEPATH'];
+    }
+}
 
 function untildify(str) {
     if (!_.isString(str)) {
@@ -19,7 +25,6 @@ function untildify(str) {
     }
     return home ? str.replace(/^~($|\/|\\)/, `${home}$1`) : str;
 }
-
 
 var escapeStrRe = require('escape-string-regexp');
 
@@ -101,7 +106,9 @@ class Resolver {
             modules = globby.sync([
                 `${self.prefix}-*`,
                 `@*/${self.prefix}-*`
-            ], { cwd: root }).map((match) => {
+            ], {
+                cwd: root
+            }).map((match) => {
                 return path.join(root, match);
             }).concat(modules);
         });
