@@ -8,15 +8,27 @@ const fs = require('fs');
 const _ = require('lodash');
 const globby = require('globby');
 const Store = require('./store');
-
-const home = homedir();
+const os = require('os');
+const home = _.isFunction(os.homedir) ? os.homedir() : homedir();
 
 function homedir() {
-    if ('HOME' in process.env) {
-        return process.env['HOME'];
-    } else {
-        return process.env['HOMEDRIVE'] + process.env['HOMEPATH'];
+    var env = process.env;
+    var home = env.HOME;
+    var user = env.LOGNAME || env.USER || env.LNAME || env.USERNAME;
+
+    if (process.platform === 'win32') {
+        return env.USERPROFILE || env.HOMEDRIVE + env.HOMEPATH || home || null;
     }
+
+    if (process.platform === 'darwin') {
+        return home || (user ? '/Users/' + user : null);
+    }
+
+    if (process.platform === 'linux') {
+        return home || (process.getuid() === 0 ? '/root' : (user ? '/home/' + user : null));
+    }
+
+    return home || null;
 }
 
 function untildify(str) {
@@ -68,6 +80,10 @@ class Resolver {
 
         if (process.env.NODE_PATH) {
             paths = _.compact(process.env.NODE_PATH.split(path.delimiter)).concat(paths);
+        }
+
+        if (process.env['_']) {
+            paths = _.compact(process.env['_'].split(path.delimiter)).concat(paths);
         }
 
         paths.push(path.join(__dirname, '../../../..'));
