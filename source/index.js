@@ -83,7 +83,7 @@ class Resolver {
         }
 
         if (process.env['_']) {
-            paths = _.compact(process.env['_'].split(path.delimiter)).concat(paths);
+            paths = _.compact(path.join(process.env['_'], '../../lib/node_modules').split(path.delimiter)).concat(paths);
         }
 
         paths.push(path.join(__dirname, '../../../..'));
@@ -119,6 +119,7 @@ class Resolver {
             if (!root) {
                 return;
             }
+
             modules = globby.sync([
                 `${self.prefix}-*`,
                 `@*/${self.prefix}-*`
